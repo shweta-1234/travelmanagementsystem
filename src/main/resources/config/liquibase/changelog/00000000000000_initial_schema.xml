@@ -117,4 +117,8 @@
             <column name="local_date" type="date"/>
         </createTable>
     </changeSet>
+    <include file="initial-db.xml"
+             relativeToChangelogFile="true"/>
+    <include file="alter-table.xml"
+             relativeToChangelogFile="true"/>
 </databaseChangeLog>

@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS public.booking
 
 CREATE TABLE IF NOT EXISTS public.city
 (
-    id bigint NOT NULL DEFAULT nextval('city_id_seq'::regclass),
+    id bigint NOT NULL,
     city_name character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT city_pkey PRIMARY KEY (id)
 );
