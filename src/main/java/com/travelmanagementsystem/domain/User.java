@@ -83,25 +83,8 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     @JoinColumn(name = "subAgent_id")
     private User subAgentId;
 
-//    @Size(min = 2, max = 10)
-//    @Column(name = "lang_key", length = 10)
-//    private String langKey;
-//
-//    @Size(max = 20)
-//    @Column(name = "activation_key", length = 20)
-//    @JsonIgnore
-//    private String activationKey;
-//
-//    @Size(max = 20)
-//    @Column(name = "reset_key", length = 20)
-//    @JsonIgnore
-//    private String resetKey;
-//
-//    @Column(name = "reset_date")
-//    private Instant resetDate = null;
-
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "jhi_user_authority",
         joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
@@ -240,18 +223,4 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
         return getClass().hashCode();
     }
 
-    // prettier-ignore
-//    @Override
-//    public String toString() {
-//        return "User{" +
-//            "login='" + login + '\'' +
-//            ", firstName='" + firstName + '\'' +
-//            ", lastName='" + lastName + '\'' +
-//            ", email='" + email + '\'' +
-//            ", imageUrl='" + imageUrl + '\'' +
-//            ", activated='" + activated + '\'' +
-//            ", langKey='" + langKey + '\'' +
-//            ", activationKey='" + activationKey + '\'' +
-//            "}";
-//    }
 }

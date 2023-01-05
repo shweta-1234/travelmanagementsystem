@@ -8,7 +8,7 @@
     <groupId>com.travelmanagementsystem</groupId>
     <artifactId>travelmanagementsystem</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <name>Travelmanagementsystem</name>
     <description>Description for travelmanagementsystem</description>
 
@@ -46,14 +46,11 @@
 
         <!-- Dependency versions -->
         <jhipster-dependencies.version>7.9.3</jhipster-dependencies.version>
-        <!-- The spring-boot version should match the one managed by
-        https://mvnrepository.com/artifact/tech.jhipster/jhipster-dependencies/${jhipster-dependencies.version} -->
+        <!-- The spring-boot version should match the one managed by https://mvnrepository.com/artifact/tech.jhipster/jhipster-dependencies/${jhipster-dependencies.version} -->
         <spring-boot.version>2.7.3</spring-boot.version>
-        <!-- The hibernate version should match the one managed by
-        https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies/${spring-boot.version} -->
+        <!-- The hibernate version should match the one managed by https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies/${spring-boot.version} -->
         <hibernate.version>5.6.10.Final</hibernate.version>
-        <!-- The liquibase version should match the one managed by
-        https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies/${spring-boot.version} -->
+        <!-- The liquibase version should match the one managed by https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies/${spring-boot.version} -->
         <liquibase.version>4.15.0</liquibase.version>
         <liquibase-hibernate5.version>4.15.0</liquibase-hibernate5.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
@@ -83,7 +80,7 @@
         <modernizer-maven-plugin.version>2.4.0</modernizer-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
         <jib-maven-plugin.version>3.2.1</jib-maven-plugin.version>
-        <jib-maven-plugin.image>eclipse-temurin:11-jre-focal</jib-maven-plugin.image>
+<!--        <jib-maven-plugin.image>eclipse-temurin:11-jre-focal</jib-maven-plugin.image>-->
         <jib-maven-plugin.architecture>amd64</jib-maven-plugin.architecture>
         <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
         <properties-maven-plugin.version>1.1.0</properties-maven-plugin.version>
@@ -110,6 +107,8 @@
             <groupId>tech.jhipster</groupId>
             <artifactId>jhipster-framework</artifactId>
         </dependency>
+
+
         <dependency>
             <groupId>javax.annotation</groupId>
             <artifactId>javax.annotation-api</artifactId>
@@ -146,6 +145,12 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-jpamodelgen</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>3.1.0</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -235,7 +240,8 @@
             <version>${archunit-junit5.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- Adding the engine dependency to the surefire-plugin unfortunately does not work in the current version. -->
+        <!-- Adding the engine dependency to the surefire-plugin unfortunately
+            does not work in the current version. -->
         <!-- https://www.archunit.org/userguide/html/000_Index.html#_junit_5 -->
         <dependency>
             <groupId>com.tngtech.archunit</groupId>
@@ -278,6 +284,32 @@
             <groupId>io.dropwizard.metrics</groupId>
             <artifactId>metrics-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>2.0.26</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.10</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>layout</artifactId>
+            <version>7.1.18</version>
+        </dependency>
+
         <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
 
@@ -522,7 +554,8 @@
                                 <goal>prepare-agent</goal>
                             </goals>
                         </execution>
-                        <!-- Ensures that the code coverage report for unit tests is created after unit tests have been run -->
+                        <!-- Ensures that the code coverage report for unit tests is created
+                            after unit tests have been run -->
                         <execution>
                             <id>post-unit-test</id>
                             <phase>test</phase>
@@ -536,7 +569,8 @@
                                 <goal>prepare-agent-integration</goal>
                             </goals>
                         </execution>
-                        <!-- Ensures that the code coverage report for integration tests is created after integration tests have been run -->
+                        <!-- Ensures that the code coverage report for integration tests is
+                            created after integration tests have been run -->
                         <execution>
                             <id>post-integration-tests</id>
                             <phase>post-integration-test</phase>
@@ -561,7 +595,7 @@
                             </platforms>
                         </from>
                         <to>
-                            <image>travelmanagementsystem:latest</image>
+                            <image>Travelmanagementsystem:latest</image>
                         </to>
                         <container>
                             <entrypoint>
@@ -600,15 +634,6 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-eclipse-plugin</artifactId>
-                    <version>${maven-eclipse-plugin.version}</version>
-                    <configuration>
-                        <downloadSources>true</downloadSources>
-                        <downloadJavadocs>true</downloadJavadocs>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
                     <version>${maven-enforcer-plugin.version}</version>
                     <executions>
@@ -634,11 +659,13 @@
                     <configuration>
                         <rules>
                             <requireMavenVersion>
-                                <message>You are running an older version of Maven. JHipster requires at least Maven ${maven.version}</message>
+                                <message>You are running an older version of Maven. JHipster
+                                    requires at least Maven ${maven.version}</message>
                                 <version>[${maven.version},)</version>
                             </requireMavenVersion>
                             <requireJavaVersion>
-                                <message>You are running an incompatible version of Java. JHipster supports JDK 11 to 18.</message>
+                                <message>You are running an incompatible version of Java.
+                                    JHipster supports JDK 11 to 18.</message>
                                 <version>[11,12),[12,13),[13,14),[14,15),[15,16),[16,17),[17,18),[18,19)</version>
                             </requireJavaVersion>
                         </rules>
@@ -726,10 +753,8 @@
                     <configuration>
                         <mainClass>${start-class}</mainClass>
                         <fork>true</fork>
-                        <!--
-                        Enable the line below to have remote debugging of your application on port 5005
-                        <jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments>
-                        -->
+                        <!-- Enable the line below to have remote debugging of your application
+                            on port 5005 <jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments> -->
                     </configuration>
 
                 </plugin>
@@ -756,134 +781,137 @@
                 <profile.tls>,tls</profile.tls>
             </properties>
         </profile>
-        <profile>
-            <id>webapp</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>net.nicoulaj.maven.plugins</groupId>
-                        <artifactId>checksum-maven-plugin</artifactId>
-                        <version>${checksum-maven-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>create-pre-compiled-webapp-checksum</id>
-                                <goals>
-                                    <goal>files</goal>
-                                </goals>
-                                <phase>generate-resources</phase>
-                            </execution>
-                            <execution>
-                                <id>create-compiled-webapp-checksum</id>
-                                <goals>
-                                    <goal>files</goal>
-                                </goals>
-                                <phase>compile</phase>
-                                <configuration>
-                                    <csvSummaryFile>checksums.csv.old</csvSummaryFile>
-                                </configuration>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <fileSets>
-                                <fileSet>
-                                    <directory>${project.basedir}</directory>
-                                    <includes>
-                                        <include>src/main/webapp/**/*.*</include>
-                                        <include>target/classes/static/**/*.*</include>
-                                        <include>package-lock.json</include>
-                                        <include>package.json</include>
-                                        <include>webpack/*.*</include>
-                                        <include>tsconfig.json</include>
-                                        <include>.postcss.config.js</include>
-                                    </includes>
-                                    <excludes>
-                                        <exclude>**/app/**/service-worker.js</exclude>
-                                        <exclude>**/app/**/vendor.css</exclude>
-                                    </excludes>
-                                </fileSet>
-                            </fileSets>
-                            <failOnError>false</failOnError>
-                            <failIfNoFiles>false</failIfNoFiles>
-                            <individualFiles>false</individualFiles>
-                            <algorithms>
-                                <algorithm>SHA-1</algorithm>
-                            </algorithms>
-                            <includeRelativePath>true</includeRelativePath>
-                            <quiet>true</quiet>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <version>${maven-antrun-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>eval-frontend-checksum</id>
-                                <phase>generate-resources</phase>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                                <configuration>
-                                    <target>
-                                        <condition property="skip.npm" value="true" else="false" >
-                                            <and>
-                                                <available file="checksums.csv" filepath="${project.build.directory}" />
-                                                <available file="checksums.csv.old" filepath="${project.build.directory}" />
-                                                <filesmatch file1="${project.build.directory}/checksums.csv" file2="${project.build.directory}/checksums.csv.old" />
-                                            </and>
-                                        </condition>
-                                    </target>
-                                    <exportAntProperties>true</exportAntProperties>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>com.github.eirslett</groupId>
-                        <artifactId>frontend-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>install-node-and-npm</id>
-                                <goals>
-                                    <goal>install-node-and-npm</goal>
-                                </goals>
-                                <configuration>
-                                    <nodeVersion>${node.version}</nodeVersion>
-                                    <npmVersion>${npm.version}</npmVersion>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>npm install</id>
-                                <goals>
-                                    <goal>npm</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>webapp build dev</id>
-                                <goals>
-                                    <goal>npm</goal>
-                                </goals>
-                                <phase>generate-resources</phase>
-                                <configuration>
-                                    <arguments>run webapp:build</arguments>
-                                    <environmentVariables>
-                                        <APP_VERSION>${project.version}</APP_VERSION>
-                                    </environmentVariables>
-                                    <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-            <properties>
-                <!-- default Spring profiles -->
-                <spring.profiles.active>dev${profile.no-liquibase}</spring.profiles.active>
-            </properties>
-        </profile>
+        <!-- <profile> -->
+        <!-- <id>webapp</id> -->
+        <!-- <activation> -->
+        <!-- <activeByDefault>true</activeByDefault> -->
+        <!-- </activation> -->
+        <!-- <build> -->
+        <!-- <plugins> -->
+        <!-- <plugin> -->
+        <!-- <groupId>net.nicoulaj.maven.plugins</groupId> -->
+        <!-- <artifactId>checksum-maven-plugin</artifactId> -->
+        <!-- <version>${checksum-maven-plugin.version}</version> -->
+        <!-- <executions> -->
+        <!-- <execution> -->
+        <!-- <id>create-pre-compiled-webapp-checksum</id> -->
+        <!-- <goals> -->
+        <!-- <goal>files</goal> -->
+        <!-- </goals> -->
+        <!-- <phase>generate-resources</phase> -->
+        <!-- </execution> -->
+        <!-- <execution> -->
+        <!-- <id>create-compiled-webapp-checksum</id> -->
+        <!-- <goals> -->
+        <!-- <goal>files</goal> -->
+        <!-- </goals> -->
+        <!-- <phase>compile</phase> -->
+        <!-- <configuration> -->
+        <!-- <csvSummaryFile>checksums.csv.old</csvSummaryFile> -->
+        <!-- </configuration> -->
+        <!-- </execution> -->
+        <!-- </executions> -->
+        <!-- <configuration> -->
+        <!-- <fileSets> -->
+        <!-- <fileSet> -->
+        <!-- <directory>${project.basedir}</directory> -->
+        <!-- <includes> -->
+        <!-- <include>src/main/webapp/**/*.*</include> -->
+        <!-- <include>target/classes/static/**/*.*</include> -->
+        <!-- <include>package-lock.json</include> -->
+        <!-- <include>package.json</include> -->
+        <!-- <include>webpack/*.*</include> -->
+        <!-- <include>tsconfig.json</include> -->
+        <!-- <include>.postcss.config.js</include> -->
+        <!-- </includes> -->
+        <!-- <excludes> -->
+        <!-- <exclude>**/app/**/service-worker.js</exclude> -->
+        <!-- <exclude>**/app/**/vendor.css</exclude> -->
+        <!-- </excludes> -->
+        <!-- </fileSet> -->
+        <!-- </fileSets> -->
+        <!-- <failOnError>false</failOnError> -->
+        <!-- <failIfNoFiles>false</failIfNoFiles> -->
+        <!-- <individualFiles>false</individualFiles> -->
+        <!-- <algorithms> -->
+        <!-- <algorithm>SHA-1</algorithm> -->
+        <!-- </algorithms> -->
+        <!-- <includeRelativePath>true</includeRelativePath> -->
+        <!-- <quiet>true</quiet> -->
+        <!-- </configuration> -->
+        <!-- </plugin> -->
+        <!-- <plugin> -->
+        <!-- <groupId>org.apache.maven.plugins</groupId> -->
+        <!-- <artifactId>maven-antrun-plugin</artifactId> -->
+        <!-- <version>${maven-antrun-plugin.version}</version> -->
+        <!-- <executions> -->
+        <!-- <execution> -->
+        <!-- <id>eval-frontend-checksum</id> -->
+        <!-- <phase>generate-resources</phase> -->
+        <!-- <goals> -->
+        <!-- <goal>run</goal> -->
+        <!-- </goals> -->
+        <!-- <configuration> -->
+        <!-- <target> -->
+        <!-- <condition property="skip.npm" value="true" else="false" > -->
+        <!-- <and> -->
+        <!-- <available file="checksums.csv" filepath="${project.build.directory}"
+            /> -->
+        <!-- <available file="checksums.csv.old" filepath="${project.build.directory}"
+            /> -->
+        <!-- <filesmatch file1="${project.build.directory}/checksums.csv" file2="${project.build.directory}/checksums.csv.old"
+            /> -->
+        <!-- </and> -->
+        <!-- </condition> -->
+        <!-- </target> -->
+        <!-- <exportAntProperties>true</exportAntProperties> -->
+        <!-- </configuration> -->
+        <!-- </execution> -->
+        <!-- </executions> -->
+        <!-- </plugin> -->
+        <!-- <plugin> -->
+        <!-- <groupId>com.github.eirslett</groupId> -->
+        <!-- <artifactId>frontend-maven-plugin</artifactId> -->
+        <!-- <executions> -->
+        <!-- <execution> -->
+        <!-- <id>install-node-and-npm</id> -->
+        <!-- <goals> -->
+        <!-- <goal>install-node-and-npm</goal> -->
+        <!-- </goals> -->
+        <!-- <configuration> -->
+        <!-- <nodeVersion>${node.version}</nodeVersion> -->
+        <!-- <npmVersion>${npm.version}</npmVersion> -->
+        <!-- </configuration> -->
+        <!-- </execution> -->
+        <!-- <execution> -->
+        <!-- <id>npm install</id> -->
+        <!-- <goals> -->
+        <!-- <goal>npm</goal> -->
+        <!-- </goals> -->
+        <!-- </execution> -->
+        <!-- <execution> -->
+        <!-- <id>webapp build dev</id> -->
+        <!-- <goals> -->
+        <!-- <goal>npm</goal> -->
+        <!-- </goals> -->
+        <!-- <phase>generate-resources</phase> -->
+        <!-- <configuration> -->
+        <!-- <arguments>run webapp:build</arguments> -->
+        <!-- <environmentVariables> -->
+        <!-- <APP_VERSION>${project.version}</APP_VERSION> -->
+        <!-- </environmentVariables> -->
+        <!-- <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven> -->
+        <!-- </configuration> -->
+        <!-- </execution> -->
+        <!-- </executions> -->
+        <!-- </plugin> -->
+        <!-- </plugins> -->
+        <!-- </build> -->
+        <!-- <properties> -->
+        <!-- &lt;!&ndash; default Spring profiles &ndash;&gt; -->
+        <!-- <spring.profiles.active>dev${profile.no-liquibase}</spring.profiles.active> -->
+        <!-- </properties> -->
+        <!-- </profile> -->
         <profile>
             <id>dev</id>
             <activation>
@@ -906,9 +934,7 @@
                 </dependency>
             </dependencies>
             <build>
-                <plugins>
-
-                </plugins>
+                <plugins></plugins>
                 <pluginManagement>
                     <plugins>
                         <plugin>
@@ -916,8 +942,8 @@
                             <artifactId>maven-failsafe-plugin</artifactId>
                             <version>${maven-failsafe-plugin.version}</version>
                             <configuration>
-                                <!-- Due to spring-boot repackage, without adding this property test classes are not found
-                                     See https://github.com/spring-projects/spring-boot/issues/6254 -->
+                                <!-- Due to spring-boot repackage, without adding this property test
+                                    classes are not found See https://github.com/spring-projects/spring-boot/issues/6254 -->
                                 <classesDirectory>${project.build.outputDirectory}</classesDirectory>
                                 <!-- Force alphabetical order to have a reproducible build -->
                                 <runOrder>alphabetical</runOrder>
@@ -1016,8 +1042,8 @@
                             <artifactId>maven-failsafe-plugin</artifactId>
                             <version>${maven-failsafe-plugin.version}</version>
                             <configuration>
-                                <!-- Due to spring-boot repackage, without adding this property test classes are not found
-                                     See https://github.com/spring-projects/spring-boot/issues/6254 -->
+                                <!-- Due to spring-boot repackage, without adding this property test
+                                    classes are not found See https://github.com/spring-projects/spring-boot/issues/6254 -->
                                 <classesDirectory>${project.build.outputDirectory}</classesDirectory>
                                 <!-- Force alphabetical order to have a reproducible build -->
                                 <runOrder>alphabetical</runOrder>
@@ -1111,53 +1137,53 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <plugin>
-                        <groupId>com.github.eirslett</groupId>
-                        <artifactId>frontend-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>install-node-and-npm</id>
-                                <goals>
-                                    <goal>install-node-and-npm</goal>
-                                </goals>
-                                <configuration>
-                                    <nodeVersion>${node.version}</nodeVersion>
-                                    <npmVersion>${npm.version}</npmVersion>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>npm install</id>
-                                <goals>
-                                    <goal>npm</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>webapp build test</id>
-                                <goals>
-                                    <goal>npm</goal>
-                                </goals>
-                                <phase>test</phase>
-                                <configuration>
-                                    <arguments>run webapp:test</arguments>
-                                    <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>webapp build prod</id>
-                                <goals>
-                                    <goal>npm</goal>
-                                </goals>
-                                <phase>generate-resources</phase>
-                                <configuration>
-                                    <arguments>run webapp:prod</arguments>
-                                    <environmentVariables>
-                                        <APP_VERSION>${project.version}</APP_VERSION>
-                                    </environmentVariables>
-                                    <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
+                    <!-- <plugin> -->
+                    <!-- <groupId>com.github.eirslett</groupId> -->
+                    <!-- <artifactId>frontend-maven-plugin</artifactId> -->
+                    <!-- <executions> -->
+                    <!-- <execution> -->
+                    <!-- <id>install-node-and-npm</id> -->
+                    <!-- <goals> -->
+                    <!-- <goal>install-node-and-npm</goal> -->
+                    <!-- </goals> -->
+                    <!-- <configuration> -->
+                    <!-- <nodeVersion>${node.version}</nodeVersion> -->
+                    <!-- <npmVersion>${npm.version}</npmVersion> -->
+                    <!-- </configuration> -->
+                    <!-- </execution> -->
+                    <!-- <execution> -->
+                    <!-- <id>npm install</id> -->
+                    <!-- <goals> -->
+                    <!-- <goal>npm</goal> -->
+                    <!-- </goals> -->
+                    <!-- </execution> -->
+                    <!-- <execution> -->
+                    <!-- <id>webapp build test</id> -->
+                    <!-- <goals> -->
+                    <!-- <goal>npm</goal> -->
+                    <!-- </goals> -->
+                    <!-- <phase>test</phase> -->
+                    <!-- <configuration> -->
+                    <!-- <arguments>run webapp:test</arguments> -->
+                    <!-- <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven> -->
+                    <!-- </configuration> -->
+                    <!-- </execution> -->
+                    <!-- <execution> -->
+                    <!-- <id>webapp build prod</id> -->
+                    <!-- <goals> -->
+                    <!-- <goal>npm</goal> -->
+                    <!-- </goals> -->
+                    <!-- <phase>generate-resources</phase> -->
+                    <!-- <configuration> -->
+                    <!-- <arguments>run webapp:prod</arguments> -->
+                    <!-- <environmentVariables> -->
+                    <!-- <APP_VERSION>${project.version}</APP_VERSION> -->
+                    <!-- </environmentVariables> -->
+                    <!-- <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven> -->
+                    <!-- </configuration> -->
+                    <!-- </execution> -->
+                    <!-- </executions> -->
+                    <!-- </plugin> -->
                     <plugin>
                         <groupId>io.github.git-commit-id</groupId>
                         <artifactId>git-commit-id-maven-plugin</artifactId>
@@ -1181,11 +1207,9 @@
             </build>
         </profile>
         <profile>
-            <!--
-                Profile for applying IDE-specific configuration.
-                At the moment it configures MapStruct and Hibernate JPA Metamodel Generator, which you need when working
-                with DTOs and entity filtering.
-            -->
+            <!-- Profile for applying IDE-specific configuration. At the moment it
+                configures MapStruct and Hibernate JPA Metamodel Generator, which you need
+                when working with DTOs and entity filtering. -->
             <id>IDE</id>
             <dependencies>
                 <dependency>
@@ -1208,7 +1232,7 @@
                 </property>
             </activation>
             <dependencies>
-                <!-- The following dependency is added due to issue #9175-->
+                <!-- The following dependency is added due to issue #9175 -->
                 <dependency>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-undertow</artifactId>
@@ -1217,11 +1241,9 @@
             <build>
                 <pluginManagement>
                     <plugins>
-                        <!--
-                            This plugin's configuration is used to store Eclipse m2e settings only.
-                            It has no influence on the Maven build itself.
-                            Remove when the m2e plugin can correctly bind to Maven lifecycle
-                        -->
+                        <!-- This plugin's configuration is used to store Eclipse m2e settings
+                            only. It has no influence on the Maven build itself. Remove when the m2e
+                            plugin can correctly bind to Maven lifecycle -->
                         <plugin>
                             <groupId>org.eclipse.m2e</groupId>
                             <artifactId>lifecycle-mapping</artifactId>
@@ -1243,7 +1265,7 @@
                                                 </goals>
                                             </pluginExecutionFilter>
                                             <action>
-                                                <ignore/>
+                                                <ignore />
                                             </action>
                                         </pluginExecution>
                                         <pluginExecution>
@@ -1257,7 +1279,7 @@
                                                 </goals>
                                             </pluginExecutionFilter>
                                             <action>
-                                                <ignore/>
+                                                <ignore />
                                             </action>
                                         </pluginExecution>
                                     </pluginExecutions>

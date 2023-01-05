@@ -1,6 +1,6 @@
 package com.travelmanagementsystem.web.rest;
 
-import com.travelmanagementsystem.service.UserService;
+import com.travelmanagementsystem.service.impl.UserServiceImpl;
 import com.travelmanagementsystem.service.dto.UserDTO;
 import java.util.*;
 import java.util.Collections;
@@ -26,9 +26,9 @@ public class PublicUserResource {
 
     private final Logger log = LoggerFactory.getLogger(PublicUserResource.class);
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
-    public PublicUserResource(UserService userService) {
+    public PublicUserResource(UserServiceImpl userService) {
         this.userService = userService;
     }
 

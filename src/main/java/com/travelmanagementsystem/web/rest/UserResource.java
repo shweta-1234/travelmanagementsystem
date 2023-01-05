@@ -5,7 +5,7 @@ import com.travelmanagementsystem.domain.User;
 import com.travelmanagementsystem.repository.UserRepository;
 import com.travelmanagementsystem.security.AuthoritiesConstants;
 import com.travelmanagementsystem.service.MailService;
-import com.travelmanagementsystem.service.UserService;
+import com.travelmanagementsystem.service.impl.UserServiceImpl;
 import com.travelmanagementsystem.service.dto.AdminUserDTO;
 import com.travelmanagementsystem.web.rest.errors.BadRequestAlertException;
 import com.travelmanagementsystem.web.rest.errors.EmailAlreadyUsedException;
@@ -81,13 +81,13 @@ public class UserResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     private final UserRepository userRepository;
 
     private final MailService mailService;
 
-    public UserResource(UserService userService, UserRepository userRepository, MailService mailService) {
+    public UserResource(UserServiceImpl userService, UserRepository userRepository, MailService mailService) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.mailService = mailService;

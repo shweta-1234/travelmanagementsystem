@@ -4,11 +4,10 @@ import com.travelmanagementsystem.domain.User;
 import com.travelmanagementsystem.repository.UserRepository;
 import com.travelmanagementsystem.security.SecurityUtils;
 import com.travelmanagementsystem.service.MailService;
-import com.travelmanagementsystem.service.UserService;
+import com.travelmanagementsystem.service.impl.UserServiceImpl;
 import com.travelmanagementsystem.service.dto.AdminUserDTO;
 import com.travelmanagementsystem.service.dto.PasswordChangeDTO;
 import com.travelmanagementsystem.web.rest.errors.*;
-import com.travelmanagementsystem.web.rest.vm.KeyAndPasswordVM;
 import com.travelmanagementsystem.web.rest.vm.ManagedUserVM;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
@@ -37,11 +36,11 @@ public class AccountResource {
 
     private final UserRepository userRepository;
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     private final MailService mailService;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
+    public AccountResource(UserRepository userRepository, UserServiceImpl userService, MailService mailService) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;

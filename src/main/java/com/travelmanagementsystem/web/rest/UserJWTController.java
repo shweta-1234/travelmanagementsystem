@@ -1,10 +1,14 @@
 package com.travelmanagementsystem.web.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.travelmanagementsystem.domain.User;
+import com.travelmanagementsystem.repository.UserRepository;
 import com.travelmanagementsystem.security.jwt.JWTFilter;
 import com.travelmanagementsystem.security.jwt.TokenProvider;
+import com.travelmanagementsystem.service.impl.UserServiceImpl;
+import com.travelmanagementsystem.utility.LoginResponse;
 import com.travelmanagementsystem.web.rest.vm.LoginVM;
-import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +16,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 /**
  * Controller to authenticate users.
@@ -25,13 +34,19 @@ public class UserJWTController {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private UserServiceImpl userService;
+
     public UserJWTController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder) {
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM) {
+    public ResponseEntity<LoginResponse> authorize(@Valid @RequestBody LoginVM loginVM) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
             loginVM.getUsername(),
             loginVM.getPassword()
@@ -42,7 +57,9 @@ public class UserJWTController {
         String jwt = tokenProvider.createToken(authentication, loginVM.isRememberMe());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-        return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
+        User user = userRepository.findByLogin(loginVM.getUsername()).orElseThrow(() -> new IllegalArgumentException("Username does not exist"));
+        LoginResponse loginResponse = new LoginResponse(user, jwt);
+        return new ResponseEntity<>(loginResponse, httpHeaders, HttpStatus.OK);
     }
 
     /**

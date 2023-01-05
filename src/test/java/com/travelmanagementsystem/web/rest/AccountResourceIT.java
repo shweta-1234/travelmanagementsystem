@@ -11,10 +11,9 @@ import com.travelmanagementsystem.domain.User;
 import com.travelmanagementsystem.repository.AuthorityRepository;
 import com.travelmanagementsystem.repository.UserRepository;
 import com.travelmanagementsystem.security.AuthoritiesConstants;
-import com.travelmanagementsystem.service.UserService;
+import com.travelmanagementsystem.service.impl.UserServiceImpl;
 import com.travelmanagementsystem.service.dto.AdminUserDTO;
 import com.travelmanagementsystem.service.dto.PasswordChangeDTO;
-import com.travelmanagementsystem.service.dto.UserDTO;
 import com.travelmanagementsystem.web.rest.vm.KeyAndPasswordVM;
 import com.travelmanagementsystem.web.rest.vm.ManagedUserVM;
 import java.time.Instant;
@@ -46,7 +45,7 @@ class AccountResourceIT {
     private AuthorityRepository authorityRepository;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
