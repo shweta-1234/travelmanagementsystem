@@ -25,3 +25,13 @@ CREATE TABLE IF NOT EXISTS public.feedback
     customer_id bigint,
     CONSTRAINT feedback_pkey PRIMARY KEY (id)
 );
+
+CREATE TABLE IF NOT EXISTS public.aadhaar_card
+(
+    id bigint NOT NULL,
+    image bytea,
+    image_name character varying(255) COLLATE pg_catalog."default",
+    image_url character varying(255) COLLATE pg_catalog."default",
+    is_accepted boolean,
+    CONSTRAINT aadhaar_card_pkey PRIMARY KEY (id)
+);

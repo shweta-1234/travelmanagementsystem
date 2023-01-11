@@ -6,6 +6,7 @@ import com.travelmanagementsystem.repository.UserRepository;
 import com.travelmanagementsystem.security.jwt.JWTFilter;
 import com.travelmanagementsystem.security.jwt.TokenProvider;
 import com.travelmanagementsystem.service.impl.UserServiceImpl;
+import com.travelmanagementsystem.utility.JwtTokenExpiration;
 import com.travelmanagementsystem.utility.LoginResponse;
 import com.travelmanagementsystem.web.rest.vm.LoginVM;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,9 @@ public class UserJWTController {
     @Autowired
     private UserServiceImpl userService;
 
+    @Autowired
+    private JwtTokenExpiration jwtTokenExpiration;
+
     public UserJWTController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder) {
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
@@ -58,7 +62,7 @@ public class UserJWTController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
         User user = userRepository.findByLogin(loginVM.getUsername()).orElseThrow(() -> new IllegalArgumentException("Username does not exist"));
-        LoginResponse loginResponse = new LoginResponse(user, jwt);
+        LoginResponse loginResponse = new LoginResponse(user, jwt, jwtTokenExpiration.getExpirationTimeOfToken(loginVM.isRememberMe()));
         return new ResponseEntity<>(loginResponse, httpHeaders, HttpStatus.OK);
     }
 

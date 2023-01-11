@@ -4,7 +4,6 @@ import com.travelmanagementsystem.domain.Authority;
 import com.travelmanagementsystem.domain.User;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,17 +21,14 @@ public class LoginResponse {
 
     private int tokenExpirationTime;
 
-    private Set<String> authorities = new HashSet<>();
+    private Set<String> authorities;
 
-    public LoginResponse() {
-    }
-
-    public LoginResponse(User user, String jwt) {
+    public LoginResponse(User user, String jwt, int jwtTokenExpiration) {
         this.userId = user.getId();
         this.userName = user.getLogin();
         this.userEmail = user.getEmail();
         this.setTokenCreatedDate(LocalDate.now());
-        this.setTokenExpirationTime(24 * 30 * 60 * 60);
+        this.tokenExpirationTime = jwtTokenExpiration;
         this.token = jwt;
         this.authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet());
     }
@@ -73,16 +69,16 @@ public class LoginResponse {
         return tokenCreatedDate;
     }
 
+    public void setTokenCreatedDate(LocalDate tokenCreatedDate) {
+        this.tokenCreatedDate = tokenCreatedDate;
+    }
+
     public int getTokenExpirationTime() {
         return tokenExpirationTime;
     }
 
     public void setTokenExpirationTime(int tokenExpirationTime) {
         this.tokenExpirationTime = tokenExpirationTime;
-    }
-
-    public void setTokenCreatedDate(LocalDate tokenCreatedDate) {
-        this.tokenCreatedDate = tokenCreatedDate;
     }
 
     public Set<String> getAuthorities() {

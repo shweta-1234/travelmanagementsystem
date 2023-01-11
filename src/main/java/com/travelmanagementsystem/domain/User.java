@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.travelmanagementsystem.config.Constants;
 import com.travelmanagementsystem.constant.Gender;
 import com.travelmanagementsystem.constant.TravelPreference;
+import com.travelmanagementsystem.service.dto.AgentDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
 
@@ -16,6 +17,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A user.
@@ -92,6 +94,20 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     )
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
+
+    public User(AgentDTO agentDTO) {
+        this.id = agentDTO.getId();
+        this.login = agentDTO.getLogin();
+        this.firstName = agentDTO.getFirstName();
+        this.lastName = agentDTO.getLastName();
+        this.email = agentDTO.getEmail();
+        this.mobile = agentDTO.getMobile();
+        this.imageUrl = agentDTO.getImageUrl();
+        this.prefix = agentDTO.getPrefix();
+    }
+
+    public User() {
+    }
 
     public Long getId() {
         return id;

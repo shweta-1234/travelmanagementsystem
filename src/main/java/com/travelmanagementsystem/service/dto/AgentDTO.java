@@ -1,9 +1,13 @@
 package com.travelmanagementsystem.service.dto;
 
 import com.travelmanagementsystem.constant.Gender;
+import com.travelmanagementsystem.domain.Authority;
+import com.travelmanagementsystem.domain.User;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class AgentDTO {
 
@@ -23,6 +27,24 @@ public class AgentDTO {
 
     @Enumerated(EnumType.STRING)
     private Gender prefix;
+
+    private Set<String> authorities;
+
+    public AgentDTO(User user) {
+        this.id = user.getId();
+        this.login = user.getLogin();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.email = user.getEmail();
+        this.imageUrl = user.getImageUrl();
+        this.mobile = user.getMobile();
+        this.prefix = user.getPrefix();
+        this.authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet());
+
+    }
+
+    public AgentDTO() {
+    }
 
     public Long getId() {
         return id;
@@ -88,4 +110,11 @@ public class AgentDTO {
         this.prefix = prefix;
     }
 
+    public Set<String> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<String> authorities) {
+        this.authorities = authorities;
+    }
 }
